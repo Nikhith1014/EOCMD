@@ -2,7 +2,9 @@
     controllerName="enterprise.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:f="sap.f"
     xmlns:core="sap.ui.core"
+    xmlns:card="sap.f.cards"
     xmlns:l="sap.ui.layout"
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:vizData="sap.viz.ui5.data"
@@ -24,27 +26,37 @@
                 <VBox class="dashboardPage">
 
                     <!-- 📌 KPI CARDS SECTION -->
-                    <l:Grid width="100%" defaultSpan="L4 M6 S12" class="kpiRow">
+<l:Grid width="100%" defaultSpan="L4 M6 S12" class="kpiRow">
 
-                        <VBox class="kpiCard">
-                            <core:Icon src="sap-icon://group" size="3rem" class="kpiIcon" />
-                            <Text text="Total Customers" class="kpiLabel" />
-                            <Text text="{dashboard>/totalCustomers}" class="kpiValue" />
-                        </VBox>
+    <GenericTile class="kpiCard" header="Total Customers" press=".onNavToCustomers">
+        <TileContent>
+            <NumericContent 
+                value="{dashboard>/totalCustomers}" 
+                icon="sap-icon://group" 
+                withMargin="false" />
+        </TileContent>
+    </GenericTile>
 
-                        <VBox class="kpiCard">
-                            <core:Icon src="sap-icon://sales-order" size="3rem" class="kpiIcon" />
-                            <Text text="Total Orders" class="kpiLabel" />
-                            <Text text="{dashboard>/totalOrders}" class="kpiValue" />
-                        </VBox>
+    <GenericTile class="kpiCard" header="Total Orders">
+        <TileContent>
+            <NumericContent 
+                value="{dashboard>/totalOrders}" 
+                icon="sap-icon://sales-order" 
+                withMargin="false" />
+        </TileContent>
+    </GenericTile>
 
-                        <VBox class="kpiCard">
-                            <core:Icon src="sap-icon://pending" size="3rem" class="kpiIcon" />
-                            <Text text="Pending Orders" class="kpiLabel" />
-                            <Text text="{dashboard>/pendingOrders}" class="kpiValue" />
-                        </VBox>
+    <GenericTile class="kpiCard" header="Pending Orders">
+        <TileContent>
+            <NumericContent 
+                value="{dashboard>/pendingOrders}" 
+                icon="sap-icon://pending" 
+                withMargin="false" />
+        </TileContent>
+    </GenericTile>
 
-                    </l:Grid>
+</l:Grid>
+
 
                     <!-- 📌 CHARTS SECTION -->
                     <l:Grid width="100%" defaultSpan="L6 M12 S12" class="chartRow">

@@ -51,7 +51,9 @@ sap.ui.define([
 
         onProfilePress(oEvent) {
             this.byId("profileMenu").openBy(oEvent.getSource());
+        },
+        onNavToCustomers: function () {
+            this.getOwnerComponent().getRouter().navTo("CustomerList");
         }
-
     });
 });

@@ -51,7 +51,9 @@
       "minUI5Version": "1.143.2",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.ui.layout": {},
+        "sap.f": {}
       }
     },
     "contentDensities": {
@@ -76,28 +78,31 @@
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "transition": "slide",
-        "type": "View",
         "viewType": "XML",
-        "path": "enterprise.view",
-        "async": true,
-        "viewPath": "enterprise.view"
+        "viewPath": "enterprise.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "transition": "slide",
+        "async": true
       },
       "routes": [
         {
-          "name": "RouteView1",
-          "pattern": ":?query:",
-          "target": [
-            "TargetView1"
-          ]
+          "name": "Dashboard",
+          "pattern": "",
+          "target": "Dashboard"
+        },
+        {
+          "name": "CustomerList",
+          "pattern": "customers",
+          "target": "CustomerList"
         }
       ],
       "targets": {
-        "TargetView1": {
-          "id": "View1",
-          "name": "View1"
+        "Dashboard": {
+          "viewName": "View1"
+        },
+        "CustomerList": {
+          "viewName": "CustomerList"
         }
       }
     },

@@ -2,49 +2,12 @@
     padding: 2.5rem;
     background: #f5f7fa;
 }
-
 .kpiRow {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 2rem;
 }
-
-.kpiCard {
-    background: white;
-    padding: 1.8rem;
-    border-radius: 18px;
-    flex: 1;
-    margin: 0 0.7rem;
-    text-align: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    transition: transform .2s ease;
-}
-.kpiCard:hover {
-    transform: translateY(-4px);
-}
-
-.kpiIcon {
-    color: #0066cc;
-    margin-bottom: 0.3rem;
-}
-
-.kpiLabel {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0.5rem;
-}
-
-.kpiValue {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #001b3c;
-    margin-top: 0.3rem;
-}
-
 .chartRow {
     margin-top: 2rem;
 }
-
 .chartCard {
     background:white;
     padding: 1.8rem;
@@ -57,3 +20,188 @@
   margin: 1.5rem 0 0 2rem;
   color: #002d62;
 }
+.kpiClickable {
+    width: 100% !important;
+    height: 100%;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 1.8rem;
+}
+.kpiTileContent {
+  margin-top: 0.8rem;
+}
+.kpiValue {
+    font-size: 2.5rem !important;
+    font-weight: 700;
+    line-height: 2.8rem;
+    color: #001B3C;
+    margin-top: 0.4rem;
+}
+.kpiInnerBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .4rem;
+    width: 100%;
+}
+.kpiValueContent .sapMNCValue {
+    font-size: 2.6rem !important;
+    font-weight: 700 !important;
+    color: #001B3C !important;
+    line-height: 3rem;
+}
+.sapMNCValue {
+    font-size: 2.6rem !important;
+    font-weight: 700 !important;
+    color: #001B3C !important;
+}
+.kpiCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+.kpiNumber {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #002b5c;
+}
+.kpiContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+}
+.kpiIcon {
+    font-size: 3rem !important;
+    color: #0A53BE;
+    margin-bottom: 0.5rem;
+}
+/* Hover effect */
+.kpiInner {
+    padding: 1rem;
+    text-align: center !important; /* Forces text alignment to center */
+}
+
+.kpiLabel {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    margin-top: 0.5rem;
+    width: 100%;
+    text-align: center;
+}
+.fullCardLink {
+    text-decoration: none !important;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.fullCardLink:hover {
+    text-decoration: none !important;
+}
+/* This centers the number vertically and horizontally in the remaining space */
+.kpiValueBox {
+    height: 100px; 
+    width: 100%;
+}
+
+.kpiValueContent {
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    color: #001B3C !important;
+    text-align: center;
+}
+/* Hover effect for navigation */
+.kpiClickable:hover {
+    transform: translateY(-4px);
+    transition: 0.3s;
+    cursor: pointer;
+}
+/* Fix the card container sizing */
+.kpiCard {
+    width: 100% !important;
+    height: 160px !important;
+    background: white !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+/* Center the icon and number horizontally */
+.kpiCard .sapMTileCnt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Style the big number */
+.kpiCard .sapMNCVal {
+    font-size: 2.8rem !important;
+    font-weight: 800 !important;
+    color: #001B3C !important;
+}
+
+/* Style the blue icons */
+.kpiCard .sapMNCIconImage {
+    font-size: 2.5rem !important;
+    color: #0A53BE !important;
+    margin-right: 10px;
+}
+
+/* Header text styling */
+.kpiCard .sapMGTTitle {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: #666 !important;
+    text-align: center;
+}
+.searchBar VBox {
+    margin-right: 1rem;
+}
+
+#customerTable {
+    margin-top: 1rem;
+}
+
+.kpiButton:hover {
+    transform: scale(1.01);
+}
+.searchBar {
+    padding: 1rem;
+    gap: 1rem; /* magic! makes consistent spacing */
+}
+
+
+.searchBtn {
+    margin-left: .5rem;
+}
+
+.addBtn {
+    margin-left: 1rem;
+}
+
+#customerTable {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+}
+
+.sapMTableTH, .sapMListTblCell {
+    padding: 0.8rem !important; /* better padding in cells */
+}
+.searchField {
+    width: 12rem;
+    margin-right: 0.8rem;
+}
+.sapMDialog {
+    border-radius: 12px;
+}
+
+.sapMOHR {
+    font-size: 1.2rem;
+}
+
+
+
