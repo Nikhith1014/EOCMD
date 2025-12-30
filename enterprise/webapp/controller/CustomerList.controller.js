@@ -48,27 +48,33 @@ sap.ui.define([
                 this.getView().getModel("customers").setData(this._originalData);
             }
         },
-        onRowPress: async function (oEvent) {
-            const oItem = oEvent.getParameter("listItem");
-            const sCustomerId = oItem.getBindingContext("customers").getProperty("id");
+onRowPress: function (oEvent) {
+    const oItem = oEvent.getParameter("listItem");
+    const oCtx = oItem.getBindingContext("customers");
 
-            // Fetch full customer details
-            const customer = await fetch("https://jsonplaceholder.typicode.com/users/" + sCustomerId).then(r => r.json());
-            this.getView().setModel(new sap.ui.model.json.JSONModel(customer), "detail");
+    if (!this._oCustomerDialog) {
+        this._oCustomerDialog = sap.ui.xmlfragment(
+            "enterprise.fragment.CustomerDetailDialog",
+            this
+        );
+        this.getView().addDependent(this._oCustomerDialog);
+    }
 
-            if (!this._customerDialog) {
-                this._customerDialog = await sap.ui.core.Fragment.load({
-                    name: "enterprise.fragment.CustomerDetailDialog",
-                    controller: this
-                });
-                this.getView().addDependent(this._customerDialog);
-            }
+    this._oCustomerDialog.setModel(oCtx.getModel(), "customer");
+    this._oCustomerDialog.bindElement("customer>" + oCtx.getPath());
+    this._oCustomerDialog.open();
+},
 
-            this._customerDialog.open();
-        },
-        onCloseDialog: function () {
-            this._customerDialog.close();
-        },
+onCloseDialog: function () {
+    if (this._oCustomerDialog) {
+        this._oCustomerDialog.close();
+    } else {
+        console.warn("⚠️ Dialog is not created yet.");
+    }
+}
+
+
+
 
     });
 });

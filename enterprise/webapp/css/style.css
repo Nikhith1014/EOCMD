@@ -162,10 +162,6 @@
     margin-right: 1rem;
 }
 
-#customerTable {
-    margin-top: 1rem;
-}
-
 .kpiButton:hover {
     transform: scale(1.01);
 }
@@ -202,6 +198,49 @@
 .sapMOHR {
     font-size: 1.2rem;
 }
+.custDialogContainer {
+    padding: 1.5rem !important;
+    gap: 1rem;
+}
+
+.custAvatar {
+    margin-right: 1rem;
+    background: #0a6ed1;
+    color: white;
+}
+
+.custName {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.custIdText {
+    font-size: 0.9rem;
+    color: grey;
+}
+
+.custHeaderBox {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.custInfoGrid > VBox {
+    margin-bottom: 1rem;
+}
+
+.custLabel {
+    font-weight: bold;
+    color: #346187;
+}
+
+.custValue {
+    padding-top: 0.2rem;
+}
+.sapMListTblRow:hover {
+    cursor: pointer;
+    background-color: #f7f8f9 !important;
+}
+
 
 
 

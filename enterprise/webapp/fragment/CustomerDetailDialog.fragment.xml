@@ -1,24 +1,60 @@
 <core:FragmentDefinition
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
 
-    <Dialog title="Customer Details" class="sapUiContentPadding"  stretch="{device>/system/phone}">
-        
-        <VBox class="sapUiSmallMargin">
+    <Dialog
+        id="customerDialog"
+        title="Customer Details"
+        stretch="{device>/system/phone}"
+        class="sapUiContentPadding"
+        verticalScrolling="true">
 
+        <VBox class="sapUiSmallMargin sapUiMediumMarginTop">
+
+            <!-- Header -->
             <ObjectHeader
-                title="{detail>/name}"
-                number="{detail>/id}"
-                numberUnit="ID"
-                intro="Customer Profile">
-            </ObjectHeader>
+                title="{customer>name}"
+                number="ID: {customer>id}"
+                icon="sap-icon://customer"
+                responsive="true"
+                class="sapUiMediumMarginBottom"/>
 
-            <ObjectAttribute title="Username" text="{detail>/username}"/>
-            <ObjectAttribute title="Email" text="{detail>/email}"/>
-            <ObjectAttribute title="Phone" text="{detail>/phone}"/>
-            <ObjectAttribute title="City" text="{detail>/address/city}"/>
-            <ObjectAttribute title="Website" text="{detail>/website}"/>
-            <ObjectAttribute title="Company" text="{detail>/company/name}"/>
+            <!-- Company Subtitle -->
+            <Text text="{customer>company/name}"
+                  class="sapUiSmallMarginBottom sapMTitle sapUiTinyMarginBegin"/>
+
+
+            <!-- Fields -->
+            <f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanL="4" labelSpanM="4"
+                adjustLabelSpan="true"
+                emptySpanL="1"
+                emptySpanM="1"
+                columnsL="1" columnsM="1"
+                class="sapUiSmallMargin">
+
+                <Label text="Username"/>
+                <Text text="{customer>username}" />
+
+                <Label text="Email"/>
+                <Text text="{customer>email}" />
+
+                <Label text="Phone"/>
+                <Text text="{customer>phone}" />
+
+                <Label text="City"/>
+                <Text text="{customer>address/city}" />
+
+                <Label text="Company"/>
+                <Text text="{customer>company/name}" />
+
+                <Label text="Website"/>
+                <Text text="{customer>website}" />
+
+            </f:SimpleForm>
 
         </VBox>
 
@@ -27,4 +63,5 @@
         </endButton>
 
     </Dialog>
+
 </core:FragmentDefinition>
