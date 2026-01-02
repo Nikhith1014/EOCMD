@@ -1,7 +1,7 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "enterprise/model/models"
-], (UIComponent, models) => {
+], function (UIComponent, models) {
     "use strict";
 
     return UIComponent.extend("enterprise.Component", {
@@ -12,14 +12,20 @@ sap.ui.define([
             ]
         },
 
-        init() {
-            // call the base component's init function
+        init: function () {
+            // 🔥 RESET HASH BEFORE ROUTER INITIALIZES
+            // This prevents UI5 from loading the last route on refresh
+            if (window.location.hash && window.location.hash !== "#/") {
+                window.history.replaceState(null, "", window.location.pathname);
+            }
+
+            // call base component init
             UIComponent.prototype.init.apply(this, arguments);
 
-            // set the device model
+            // set device model
             this.setModel(models.createDeviceModel(), "device");
 
-            // enable routing
+            // now initialize router (will load default route only)
             this.getRouter().initialize();
         }
     });

@@ -6,61 +6,74 @@
     <Dialog
         id="customerDialog"
         title="Customer Details"
-        stretch="{device>/system/phone}"
         class="sapUiContentPadding"
         verticalScrolling="true">
 
-        <VBox class="sapUiSmallMargin sapUiMediumMarginTop">
-
-            <!-- Header -->
-            <ObjectHeader
-                title="{customer>name}"
-                number="ID: {customer>id}"
-                icon="sap-icon://customer"
-                responsive="true"
-                class="sapUiMediumMarginBottom"/>
-
-            <!-- Company Subtitle -->
-            <Text text="{customer>company/name}"
-                  class="sapUiSmallMarginBottom sapMTitle sapUiTinyMarginBegin"/>
-
-
-            <!-- Fields -->
+        <!-- ================= CONTENT ================= -->
+        <content>
             <f:SimpleForm
-                editable="false"
                 layout="ResponsiveGridLayout"
-                labelSpanL="4" labelSpanM="4"
-                adjustLabelSpan="true"
-                emptySpanL="1"
-                emptySpanM="1"
-                columnsL="1" columnsM="1"
-                class="sapUiSmallMargin">
+                labelSpanL="3"
+                labelSpanM="4"
+                columnsL="2"
+                columnsM="1">
+
+                <Label text="ID"/>
+                <Text text="{customerEdit>/id}"/>
+
+                <Label text="Name"/>
+                <Input value="{customerEdit>/name}" editable="{ui>/editMode}" required="true"/>
 
                 <Label text="Username"/>
-                <Text text="{customer>username}" />
+                <Input value="{customerEdit>/username}" editable="{ui>/editMode}"/>
 
                 <Label text="Email"/>
-                <Text text="{customer>email}" />
+                <Input value="{customerEdit>/email}"
+                       type="Email"
+                       editable="{ui>/editMode}"
+                       liveChange=".onValidateEmail"/>
 
                 <Label text="Phone"/>
-                <Text text="{customer>phone}" />
+                <Input value="{customerEdit>/phone}"
+                       editable="{ui>/editMode}"
+                       liveChange=".onValidatePhone"/>
 
                 <Label text="City"/>
-                <Text text="{customer>address/city}" />
+                <Input value="{customerEdit>/address/city}" editable="{ui>/editMode}"/>
 
                 <Label text="Company"/>
-                <Text text="{customer>company/name}" />
+                <Input value="{customerEdit>/company/name}" editable="{ui>/editMode}"/>
 
                 <Label text="Website"/>
-                <Text text="{customer>website}" />
+                <Input value="{customerEdit>/website}" editable="{ui>/editMode}"/>
 
             </f:SimpleForm>
+        </content>
 
-        </VBox>
+        <!-- ================= FOOTER ================= -->
+        <footer>
+            <Toolbar>
+                <!-- DELETE (LEFT) -->
+                <Button
+                    text="Delete"
+                    type="Reject"
+                    visible="{= !${ui>/editMode} }"
+                    press=".onDeleteCustomer"/>
 
-        <endButton>
-            <Button text="Close" press=".onCloseDialog"/>
-        </endButton>
+                <ToolbarSpacer/>
+
+                <!-- EDIT / SAVE -->
+                <Button
+                    text="{= ${ui>/editMode} ? 'Save' : 'Edit'}"
+                    type="Emphasized"
+                    press=".onEditSave"/>
+
+                <!-- CANCEL / CLOSE -->
+                <Button
+                    text="{= ${ui>/editMode} ? 'Cancel' : 'Close'}"
+                    press=".onCancelClose"/>
+            </Toolbar>
+        </footer>
 
     </Dialog>
 

@@ -14,12 +14,23 @@
 
             <Button text="Clear" press=".onClear" class="searchBtn"/>
             <Button icon="sap-icon://add" text="Add Customer" type="Accept" press=".onAddCustomer" class="addBtn"/>
+            <Button
+    text="Export to Excel"
+    icon="sap-icon://excel-attachment"
+    press=".onExportExcel"/>
+    <Button
+    text="Export Selected"
+    icon="sap-icon://excel-attachment"
+    type="Emphasized"
+    press=".onExportSelected"/>
+
+
         </HBox>
 
         <!-- 📋 CUSTOMER TABLE -->
         <Table id="customerTable"
                items="{customers>/}"
-               mode="SingleSelectMaster"
+               mode="MultiSelect"
                itemPress=".onRowPress"
                inset="false">
 
