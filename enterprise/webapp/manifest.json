@@ -64,7 +64,11 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "enterprise.i18n.i18n"
+          "bundleName": "enterprise.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
         }
       }
     },

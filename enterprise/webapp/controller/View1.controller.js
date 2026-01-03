@@ -7,51 +7,86 @@ sap.ui.define([
     return Controller.extend("enterprise.controller.View1", {
 
         onInit: function () {
-            const oModel = new JSONModel({
+            // Dashboard derived model
+            const oDashboardModel = new sap.ui.model.json.JSONModel({
                 totalCustomers: 0,
                 totalOrders: 0,
                 pendingOrders: 0,
                 ordersPerCustomer: [],
                 orderStatus: []
             });
+            this.getView().setModel(oDashboardModel, "dashboard");
 
-            this.getView().setModel(oModel, "dashboard");
-            this.loadFromAPI();
+            // Global customers model
+            this._oCustomersModel = this.getOwnerComponent().getModel("customers");
+
+            // 🔥 LISTEN TO /items BINDING (NOT THE MODEL)
+            this._oCustomersBinding = this._oCustomersModel
+                .bindProperty("/items");
+
+            this._oCustomersBinding.attachChange(
+                this._recalculateDashboard,
+                this
+            );
+
+            // Load orders once
+            this._loadOrders();
         },
 
-        async loadFromAPI() {
+        /* =======================
+           LOAD ORDERS
+        ======================= */
+        async _loadOrders() {
             try {
-                const users = await fetch("https://jsonplaceholder.typicode.com/users").then(r => r.json());
-                const posts = await fetch("https://jsonplaceholder.typicode.com/posts").then(r => r.json());
+                const aOrders = await fetch(
+                    "https://jsonplaceholder.typicode.com/posts"
+                ).then(r => r.json());
 
-                const pending = posts.filter(p => p.userId === 1); // rule for pending
+                this._aOrders = aOrders;
 
-                const ordersPerCustomer = users.map(u => ({
-                    name: u.name,
-                    orders: posts.filter(p => p.userId === u.id).length
-                }));
-
-                const data = {
-                    totalCustomers: users.length,
-                    totalOrders: posts.length,
-                    pendingOrders: pending.length,
-                    ordersPerCustomer,
-                    orderStatus: [
-                        { status: "Completed", count: posts.length - pending.length },
-                        { status: "Pending", count: pending.length }
-                    ]
-                };
-
-                this.getView().getModel("dashboard").setData(data);
+                // Initial calculation
+                this._recalculateDashboard();
 
             } catch (e) {
-                console.error("API error:", e);
+                console.error("Orders API error:", e);
             }
         },
 
-        onProfilePress(oEvent) {
-            this.byId("profileMenu").openBy(oEvent.getSource());
+        /* =======================
+           KPI + CHART RECALC
+        ======================= */
+        _recalculateDashboard: function () {
+            const aCustomers =
+                this._oCustomersModel.getProperty("/items") || [];
+            const aOrders = this._aOrders || [];
+
+            const totalCustomers = aCustomers.length;
+            const totalOrders = aOrders.length;
+
+            const pendingOrders =
+                aOrders.filter(o => o.userId === 1).length;
+
+            const ordersPerCustomer = aCustomers.map(c => ({
+                name: c.name,
+                orders: aOrders.filter(o => o.userId === c.id).length
+            }));
+
+            const orderStatus = [
+                { status: "Completed", count: totalOrders - pendingOrders },
+                { status: "Pending", count: pendingOrders }
+            ];
+
+            this.getView().getModel("dashboard").setData({
+                totalCustomers,
+                totalOrders,
+                pendingOrders,
+                ordersPerCustomer,
+                orderStatus
+            });
         },
+        /* =======================
+           NAVIGATION
+        ======================= */
         onNavToCustomers: function () {
             this.getOwnerComponent().getRouter().navTo("CustomerList");
         }

@@ -29,7 +29,7 @@
 
         <!-- 📋 CUSTOMER TABLE -->
         <Table id="customerTable"
-               items="{customers>/}"
+               items="{customers>/items}"
                mode="MultiSelect"
                itemPress=".onRowPress"
                inset="false">
