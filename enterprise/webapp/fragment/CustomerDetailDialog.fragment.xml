@@ -1,14 +1,14 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:f="sap.ui.layout.form">
-
+    xmlns:f="sap.ui.layout.form"
+>
     <Dialog
         id="customerDialog"
         title="Customer Details"
         class="sapUiContentPadding"
-        verticalScrolling="true">
-
+        verticalScrolling="true"
+    >
         <!-- ================= CONTENT ================= -->
         <content>
             <f:SimpleForm
@@ -16,37 +16,56 @@
                 labelSpanL="3"
                 labelSpanM="4"
                 columnsL="2"
-                columnsM="1">
+                columnsM="1"
+            >
+                <Label text="ID" />
+                <Text text="{customerEdit>/id}" />
 
-                <Label text="ID"/>
-                <Text text="{customerEdit>/id}"/>
+                <Label text="Name" />
+                <Input
+                    value="{customerEdit>/name}"
+                    editable="{ui>/editMode}"
+                    required="true"
+                />
 
-                <Label text="Name"/>
-                <Input value="{customerEdit>/name}" editable="{ui>/editMode}" required="true"/>
+                <Label text="Username" />
+                <Input
+                    value="{customerEdit>/username}"
+                    editable="{ui>/editMode}"
+                />
 
-                <Label text="Username"/>
-                <Input value="{customerEdit>/username}" editable="{ui>/editMode}"/>
+                <Label text="Email" />
+                <Input
+                    value="{customerEdit>/email}"
+                    type="Email"
+                    editable="{ui>/editMode}"
+                    liveChange=".onValidateEmail"
+                />
 
-                <Label text="Email"/>
-                <Input value="{customerEdit>/email}"
-                       type="Email"
-                       editable="{ui>/editMode}"
-                       liveChange=".onValidateEmail"/>
+                <Label text="Phone" />
+                <Input
+                    value="{customerEdit>/phone}"
+                    editable="{ui>/editMode}"
+                    liveChange=".onValidatePhone"
+                />
 
-                <Label text="Phone"/>
-                <Input value="{customerEdit>/phone}"
-                       editable="{ui>/editMode}"
-                       liveChange=".onValidatePhone"/>
+                <Label text="City" />
+                <Input
+                    value="{customerEdit>/address/city}"
+                    editable="{ui>/editMode}"
+                />
 
-                <Label text="City"/>
-                <Input value="{customerEdit>/address/city}" editable="{ui>/editMode}"/>
+                <Label text="Company" />
+                <Input
+                    value="{customerEdit>/company/name}"
+                    editable="{ui>/editMode}"
+                />
 
-                <Label text="Company"/>
-                <Input value="{customerEdit>/company/name}" editable="{ui>/editMode}"/>
-
-                <Label text="Website"/>
-                <Input value="{customerEdit>/website}" editable="{ui>/editMode}"/>
-
+                <Label text="Website" />
+                <Input
+                    value="{customerEdit>/website}"
+                    editable="{ui>/editMode}"
+                />
             </f:SimpleForm>
         </content>
 
@@ -58,23 +77,24 @@
                     text="Delete"
                     type="Reject"
                     visible="{= !${ui>/editMode} }"
-                    press=".onDeleteCustomer"/>
+                    press=".onDeleteCustomer"
+                />
 
-                <ToolbarSpacer/>
+                <ToolbarSpacer />
 
                 <!-- EDIT / SAVE -->
                 <Button
                     text="{= ${ui>/editMode} ? 'Save' : 'Edit'}"
                     type="Emphasized"
-                    press=".onEditSave"/>
+                    press=".onEditSave"
+                />
 
                 <!-- CANCEL / CLOSE -->
                 <Button
                     text="{= ${ui>/editMode} ? 'Cancel' : 'Close'}"
-                    press=".onCancelClose"/>
+                    press=".onCancelClose"
+                />
             </Toolbar>
         </footer>
-
     </Dialog>
-
 </core:FragmentDefinition>

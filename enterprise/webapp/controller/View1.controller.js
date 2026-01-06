@@ -5,33 +5,38 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("enterprise.controller.View1", {
-
         onInit: function () {
-            // Dashboard derived model
-            const oDashboardModel = new sap.ui.model.json.JSONModel({
-                totalCustomers: 0,
-                totalOrders: 0,
-                pendingOrders: 0,
-                ordersPerCustomer: [],
-                orderStatus: []
-            });
-            this.getView().setModel(oDashboardModel, "dashboard");
 
-            // Global customers model
-            this._oCustomersModel = this.getOwnerComponent().getModel("customers");
-
-            // 🔥 LISTEN TO /items BINDING (NOT THE MODEL)
-            this._oCustomersBinding = this._oCustomersModel
-                .bindProperty("/items");
-
-            this._oCustomersBinding.attachChange(
-                this._recalculateDashboard,
-                this
+            this.getView().setModel(
+                new sap.ui.model.json.JSONModel({
+                    totalCustomers: 0,
+                    totalOrders: 0,
+                    pendingOrders: 0,
+                    ordersPerCustomer: [],
+                    orderStatus: []
+                }),
+                "dashboard"
             );
 
-            // Load orders once
-            this._loadOrders();
+            this._oCustomersModel =
+                this.getOwnerComponent().getModel("customers");
+
+            this._oOrdersModel =
+                this.getOwnerComponent().getModel("orders");
+
+            // LISTEN TO BOTH MODELS
+            this._oCustomersModel
+                .bindProperty("/items")
+                .attachChange(this._recalculateDashboard, this);
+
+            this._oOrdersModel
+                .bindProperty("/items")
+                .attachChange(this._recalculateDashboard, this);
+
+            this._recalculateDashboard();
         },
+
+
 
         /* =======================
            LOAD ORDERS
@@ -56,15 +61,24 @@ sap.ui.define([
            KPI + CHART RECALC
         ======================= */
         _recalculateDashboard: function () {
+
             const aCustomers =
                 this._oCustomersModel.getProperty("/items") || [];
-            const aOrders = this._aOrders || [];
+
+            const aOrders =
+                this._oOrdersModel.getProperty("/items") || [];
 
             const totalCustomers = aCustomers.length;
             const totalOrders = aOrders.length;
 
             const pendingOrders =
-                aOrders.filter(o => o.userId === 1).length;
+                aOrders.filter(o => o.status === "Pending").length;
+
+            const completedOrders =
+                aOrders.filter(o => o.status === "Completed").length;
+
+            const cancelledOrders =
+                aOrders.filter(o => o.status === "Cancelled").length;
 
             const ordersPerCustomer = aCustomers.map(c => ({
                 name: c.name,
@@ -72,8 +86,9 @@ sap.ui.define([
             }));
 
             const orderStatus = [
-                { status: "Completed", count: totalOrders - pendingOrders },
-                { status: "Pending", count: pendingOrders }
+                { status: "Completed", count: completedOrders },
+                { status: "Pending", count: pendingOrders },
+                { status: "Cancelled", count: cancelledOrders }
             ];
 
             this.getView().getModel("dashboard").setData({
@@ -89,6 +104,11 @@ sap.ui.define([
         ======================= */
         onNavToCustomers: function () {
             this.getOwnerComponent().getRouter().navTo("CustomerList");
+        },
+        
+        onNavToOrders: function () {
+            this.getOwnerComponent().getRouter().navTo("Orders");
         }
+
     });
 });

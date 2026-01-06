@@ -99,6 +99,11 @@
           "name": "CustomerList",
           "pattern": "customers",
           "target": "CustomerList"
+        },
+        {
+          "name": "Orders",
+          "pattern": "orders",
+          "target": "Orders"
         }
       ],
       "targets": {
@@ -107,6 +112,10 @@
         },
         "CustomerList": {
           "viewName": "CustomerList"
+        },
+        "Orders": {
+          "viewName": "OrdersList",
+          "viewType": "XML"
         }
       }
     },

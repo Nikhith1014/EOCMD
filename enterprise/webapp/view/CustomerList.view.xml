@@ -2,64 +2,108 @@
     controllerName="enterprise.controller.CustomerList"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    displayBlock="true">
+    displayBlock="true"
+>
+    <Page
+        title="Customer List"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <!-- SEARCH BAR -->
+        <HBox
+            class="searchBar"
+            alignItems="Center"
+            justifyContent="Start"
+        >
+            <Input
+                placeholder="Search by Name"
+                id="nameField"
+                liveChange=".onLiveSearch"
+                class="searchField"
+            />
+            <Input
+                placeholder="City"
+                id="cityField"
+                liveChange=".onLiveSearch"
+                class="searchField"
+            />
+            <Input
+                placeholder="Company"
+                id="companyField"
+                liveChange=".onLiveSearch"
+                class="searchField"
+            />
 
-    <Page title="Customer List" showNavButton="true" navButtonPress=".onNavBack">
-
-        <!-- 🔍 SEARCH BAR -->
-        <HBox class="searchBar" alignItems="Center" justifyContent="Start">
-            <Input placeholder="Search by Name" id="nameField" liveChange=".onLiveSearch" class="searchField"/>
-            <Input placeholder="City" id="cityField" liveChange=".onLiveSearch" class="searchField"/>
-            <Input placeholder="Company" id="companyField" liveChange=".onLiveSearch" class="searchField"/>
-
-            <Button text="Clear" press=".onClear" class="searchBtn"/>
-            <Button icon="sap-icon://add" text="Add Customer" type="Accept" press=".onAddCustomer" class="addBtn"/>
             <Button
-    text="Export to Excel"
-    icon="sap-icon://excel-attachment"
-    press=".onExportExcel"/>
-    <Button
-    text="Export Selected"
-    icon="sap-icon://excel-attachment"
-    type="Emphasized"
-    press=".onExportSelected"/>
-
-
+                text="Clear"
+                press=".onClear"
+                class="searchBtn"
+            />
+            <Button
+                icon="sap-icon://add"
+                text="Add Customer"
+                type="Accept"
+                press=".onAddCustomer"
+                class="addBtn"
+            />
+            <Button
+                text="Export to Excel"
+                icon="sap-icon://excel-attachment"
+                press=".onExportExcel"
+            />
+            <Button
+                text="Export Selected"
+                icon="sap-icon://excel-attachment"
+                type="Emphasized"
+                press=".onExportSelected"
+            />
         </HBox>
 
-        <!-- 📋 CUSTOMER TABLE -->
-        <Table id="customerTable"
-               items="{customers>/items}"
-               mode="MultiSelect"
-               itemPress=".onRowPress"
-               inset="false">
-
+        <!-- CUSTOMER TABLE -->
+        <Table
+            id="customerTable"
+            items="{customers>/items}"
+            mode="MultiSelect"
+            itemPress=".onRowPress"
+            inset="false"
+        >
             <columns>
-                <Column><Text text="ID"/></Column>
-                <Column><Text text="Name"/></Column>
-                <Column><Text text="Username"/></Column>
-                <Column><Text text="Email"/></Column>
-                <Column><Text text="Phone"/></Column>
-                <Column><Text text="City"/></Column>
-                <Column><Text text="Company"/></Column>
+                <Column>
+                    <Text text="ID" />
+                </Column>
+                <Column>
+                    <Text text="Name" />
+                </Column>
+                <Column>
+                    <Text text="Username" />
+                </Column>
+                <Column>
+                    <Text text="Email" />
+                </Column>
+                <Column>
+                    <Text text="Phone" />
+                </Column>
+                <Column>
+                    <Text text="City" />
+                </Column>
+                <Column>
+                    <Text text="Company" />
+                </Column>
             </columns>
 
             <items>
                 <ColumnListItem type="Active">
                     <cells>
-                        <Text text="{customers>id}"/>
-                        <Text text="{customers>name}"/>
-                        <Text text="{customers>username}"/>
-                        <Text text="{customers>email}"/>
-                        <Text text="{customers>phone}"/>
-                        <Text text="{customers>address/city}"/>
-                        <Text text="{customers>company/name}"/>
+                        <Text text="{customers>id}" />
+                        <Text text="{customers>name}" />
+                        <Text text="{customers>username}" />
+                        <Text text="{customers>email}" />
+                        <Text text="{customers>phone}" />
+                        <Text text="{customers>address/city}" />
+                        <Text text="{customers>company/name}" />
                     </cells>
                 </ColumnListItem>
             </items>
-
         </Table>
-
     </Page>
-
 </mvc:View>

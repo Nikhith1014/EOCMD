@@ -1,0 +1,72 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="Order Details"
+        stretch="true"
+    >
+        <content>
+            <VBox
+                class="sapUiSmallMargin"
+                width="100%"
+            >
+                <Label text="Customer" />
+                <Input
+                    value="{ path: 'orderEdit>/userId', formatter: '.formatCustomerName' }"
+                    editable="false"
+                />
+
+                <Label text="Order Title" />
+                <Input
+                    value="{orderEdit>/title}"
+                    editable="{ui>/editMode}"
+                />
+                <Label text="Status" />
+                <Select
+                    selectedKey="{orderEdit>/status}"
+                    enabled="{ui>/editMode}"
+                >
+                    <items>
+                        <core:Item
+                            key="Completed"
+                            text="Completed"
+                        />
+                        <core:Item
+                            key="Pending"
+                            text="Pending"
+                        />
+                        <core:Item
+                            key="Cancelled"
+                            text="Cancelled"
+                        />
+                    </items>
+                </Select>
+            </VBox>
+        </content>
+
+        <!--  FOOTER IS THE KEY -->
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+
+                <Button
+                    text="{= ${ui>/editMode} ? 'Save' : 'Edit'}"
+                    type="Emphasized"
+                    press=".onEditSave"
+                />
+
+                <Button
+                    text="Delete"
+                    type="Reject"
+                    press=".onDeleteOrder"
+                />
+
+                <Button
+                    text="Close"
+                    press=".onCloseDialog"
+                />
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

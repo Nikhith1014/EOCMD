@@ -19,26 +19,7 @@ sap.ui.define([
         onNavBack: function () {
             this.getOwnerComponent().getRouter().navTo("Dashboard");
         },
-        // onLiveSearch: function () {
-        //     const name = this.byId("nameField").getValue().toLowerCase();
-        //     const city = this.byId("cityField").getValue().toLowerCase();
-        //     const company = this.byId("companyField").getValue().toLowerCase();
 
-        //     const allData = this._originalData || this.getView().getModel("customers").getData();
-        //     if (!this._originalData) {
-        //         this._originalData = JSON.parse(JSON.stringify(allData)); // backup original data
-        //     }
-
-        //     const result = this._originalData.filter(c => {
-        //         return (
-        //             (name ? c.name.toLowerCase().includes(name) : true) &&
-        //             (city ? c.address.city.toLowerCase().includes(city) : true) &&
-        //             (company ? c.company.name.toLowerCase().includes(company) : true)
-        //         );
-        //     });
-
-        //     this.getView().getModel("customers").setData(result);
-        // },
         onLiveSearch: function () {
             const sName = this.byId("nameField").getValue().toLowerCase();
             const sCity = this.byId("cityField").getValue().toLowerCase();
@@ -76,7 +57,6 @@ sap.ui.define([
                 );
             }
 
-            // AND logic
             const oFinalFilter = new sap.ui.model.Filter({
                 filters: aFilters,
                 and: true
@@ -84,6 +64,7 @@ sap.ui.define([
 
             oBinding.filter(aFilters.length ? oFinalFilter : []);
         },
+
         onClear: function () {
             this.byId("nameField").setValue("");
             this.byId("cityField").setValue("");
@@ -98,6 +79,7 @@ sap.ui.define([
             this._oCustomerDialog.close();
 
         },
+
         onRowPress: function (oEvent) {
             const oCtx = oEvent
                 .getParameter("listItem")
@@ -113,7 +95,6 @@ sap.ui.define([
                 this.getView().addDependent(this._oCustomerDialog);
             }
 
-            // set models
             this.getView().setModel(
                 new sap.ui.model.json.JSONModel(oCopy),
                 "customerEdit"
@@ -163,14 +144,12 @@ sap.ui.define([
                 }
             );
 
-            // 🔥 CRITICAL PART
             const oCustomersModel =
                 this.getOwnerComponent().getModel("customers");
 
             const aItems =
                 oCustomersModel.getProperty("/items");
 
-            // 🔥 REPLACE FULL ARRAY (forces change detection)
             const aUpdatedItems = aItems.map(c =>
                 c.id === oEditData.id
                     ? { ...oEditData }     // new object
@@ -192,6 +171,7 @@ sap.ui.define([
             oInput.setValueState(bValid ? "None" : "Error");
             oInput.setValueStateText("Invalid email format");
         },
+
         onValidatePhone: function (oEvent) {
             const sValue = oEvent.getParameter("value");
             const oInput = oEvent.getSource();
@@ -201,6 +181,7 @@ sap.ui.define([
             oInput.setValueState(bValid ? "None" : "Error");
             oInput.setValueStateText("Invalid phone number");
         },
+
         onCancelClose: function () {
             const oUI = this.getView().getModel("ui");
 
@@ -245,11 +226,12 @@ sap.ui.define([
         onCancelCreateCustomer: function () {
             this._oCreateDialog.close();
         },
+
         onExportExcel: function () {
             const oTable = this.byId("customerTable");
             const oBinding = oTable.getBinding("items");
 
-            // 🔹 Get only filtered + visible rows
+            // Get only filtered + visible rows
             const aContexts = oBinding.getContexts(0, oBinding.getLength());
 
             const aData = aContexts.map(oCtx => {
@@ -289,6 +271,7 @@ sap.ui.define([
             const oSheet = new sap.ui.export.Spreadsheet(oSettings);
             oSheet.build().finally(() => oSheet.destroy());
         },
+
         onExportSelected: function () {
             const oTable = this.byId("customerTable");
             const aSelectedItems = oTable.getSelectedItems();
@@ -348,11 +331,12 @@ sap.ui.define([
                 { ...oNewCustomer, id: Date.now() }
             ]);
 
-            // 🔑 FORCE TABLE UI UPDATE
+            //  FORCE TABLE UI UPDATE
             this.byId("customerTable").getBinding("items").refresh(true);
 
             this._oCreateDialog.close();
         },
+
         onDeleteCustomer: async function () {
             const oCustomer =
                 this.getView().getModel("customerEdit").getData();
@@ -362,25 +346,10 @@ sap.ui.define([
                 { method: "DELETE" }
             );
 
-            const oCustomersModel =
-                this.getOwnerComponent().getModel("customers");
-
-            const aItems =
-                oCustomersModel.getProperty("/items");
-
-            const aUpdatedItems = aItems
-                .filter(c => c.id !== oCustomer.id)
-                .map(c => ({ ...c }));
-
-            oCustomersModel.setProperty("/items", aUpdatedItems);
-
-            // 🔑 FORCE TABLE UI UPDATE
-            this.byId("customerTable").getBinding("items").refresh(true);
+            this.getOwnerComponent().deleteCustomer(oCustomer.id);
 
             this._oCustomerDialog.close();
         }
-
-
 
     });
 });

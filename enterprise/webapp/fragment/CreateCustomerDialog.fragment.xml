@@ -1,53 +1,63 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:f="sap.ui.layout.form">
-
+    xmlns:f="sap.ui.layout.form"
+>
     <Dialog
         id="createCustomerDialog"
         title="Create Customer"
-        class="sapUiContentPadding">
-
+        class="sapUiContentPadding"
+    >
         <content>
             <f:SimpleForm
                 layout="ResponsiveGridLayout"
                 labelSpanL="3"
                 labelSpanM="4"
                 columnsL="2"
-                columnsM="1">
+                columnsM="1"
+            >
+                <Label text="Name" />
+                <Input
+                    value="{newCustomer>/name}"
+                    required="true"
+                />
 
-                <Label text="Name"/>
-                <Input value="{newCustomer>/name}" required="true"/>
+                <Label text="Username" />
+                <Input value="{newCustomer>/username}" />
 
-                <Label text="Username"/>
-                <Input value="{newCustomer>/username}"/>
+                <Label text="Email" />
+                <Input
+                    value="{newCustomer>/email}"
+                    type="Email"
+                />
 
-                <Label text="Email"/>
-                <Input value="{newCustomer>/email}" type="Email"/>
+                <Label text="Phone" />
+                <Input value="{newCustomer>/phone}" />
 
-                <Label text="Phone"/>
-                <Input value="{newCustomer>/phone}"/>
+                <Label text="City" />
+                <Input value="{newCustomer>/address/city}" />
 
-                <Label text="City"/>
-                <Input value="{newCustomer>/address/city}"/>
+                <Label text="Company" />
+                <Input value="{newCustomer>/company/name}" />
 
-                <Label text="Company"/>
-                <Input value="{newCustomer>/company/name}"/>
-
-                <Label text="Website"/>
-                <Input value="{newCustomer>/website}"/>
-
+                <Label text="Website" />
+                <Input value="{newCustomer>/website}" />
             </f:SimpleForm>
         </content>
 
         <footer>
             <Toolbar>
-                <ToolbarSpacer/>
-                <Button text="Create" type="Emphasized" press=".onCreateCustomer"/>
-                <Button text="Cancel" press=".onCancelCreateCustomer"/>
+                <ToolbarSpacer />
+                <Button
+                    text="Create"
+                    type="Emphasized"
+                    press=".onCreateCustomer"
+                />
+                <Button
+                    text="Cancel"
+                    press=".onCancelCreateCustomer"
+                />
             </Toolbar>
         </footer>
-
     </Dialog>
-
 </core:FragmentDefinition>

@@ -1,0 +1,69 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="Create Order"
+        stretch="true"
+    >
+        <content>
+            <VBox
+                class="sapUiSmallMargin"
+                width="100%"
+            >
+                <Label text="Customer" />
+                <Input
+                    value="{newOrder>/customerName}"
+                    showSuggestion="true"
+                    suggest=".onSuggestCustomer"
+                    suggestionItemSelected=".onCustomerSelected"
+                    placeholder="Type customer name"
+                    suggestionItems="{customers>/items}"
+                >
+                    <core:Item
+                        text="{customers>name}"
+                        key="{customers>id}"
+                    />
+                </Input>
+
+                <Label text="Order Title" />
+                <Input value="{newOrder>/title}" />
+
+                <Label text="Status" />
+                <Select selectedKey="{newOrder>/status}">
+                    <items>
+                        <core:Item
+                            key="Pending"
+                            text="Pending"
+                        />
+                        <core:Item
+                            key="Completed"
+                            text="Completed"
+                        />
+                        <core:Item
+                            key="Cancelled"
+                            text="Cancelled"
+                        />
+                    </items>
+                </Select>
+            </VBox>
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+
+                <Button
+                    text="Create"
+                    type="Emphasized"
+                    press=".onCreateOrder"
+                />
+
+                <Button
+                    text="Cancel"
+                    press=".onCloseCreateDialog"
+                />
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

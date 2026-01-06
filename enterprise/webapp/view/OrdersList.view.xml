@@ -1,0 +1,110 @@
+<mvc:View
+    controllerName="enterprise.controller.OrdersList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        title="Orders"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <OverflowToolbar class="sapUiMediumMarginTop">
+            <Input
+                id="orderCustomerSearch"
+                width="220px"
+                placeholder="Search Customer"
+                liveChange=".onLiveSearchCustomer"
+            />
+
+            <ToolbarSpacer width="0.5rem" />
+            <Select
+                width="180px"
+                class="sapUiSmallMarginBegin"
+                change=".onFilterByStatus"
+            >
+                <items>
+                    <core:Item
+                        key=""
+                        text="All Statuses"
+                    />
+                    <core:Item
+                        key="Completed"
+                        text="Completed"
+                    />
+                    <core:Item
+                        key="Pending"
+                        text="Pending"
+                    />
+                    <core:Item
+                        key="Cancelled"
+                        text="Cancelled"
+                    />
+                </items>
+            </Select>
+
+            <ToolbarSpacer width="0.5rem" />
+
+            <Button
+                text="Sort by Order ID"
+                icon="sap-icon://sort"
+                press=".onSortByOrderId"
+            />
+            <Button
+                text="Sort by Status"
+                icon="sap-icon://sort"
+                press=".onSortByStatus"
+            />
+
+            <ToolbarSpacer />
+            <Button
+                text="Create Order"
+                icon="sap-icon://add"
+                type="Emphasized"
+                press=".onAddOrder"
+            />
+            <Button
+                text="Export Orders"
+                icon="sap-icon://excel-attachment"
+                press=".onExportOrders"
+            />
+        </OverflowToolbar>
+
+        <Table
+            id="ordersTable"
+            items="{orders>/items}"
+            mode="SingleSelectMaster"
+            itemPress=".onRowPress"
+            growing="true"
+            growingThreshold="20"
+        >
+            <columns>
+                <Column>
+                    <Text text="Order ID" />
+                </Column>
+                <Column>
+                    <Text text="Customer" />
+                </Column>
+                <Column>
+                    <Text text="Title" />
+                </Column>
+                <Column>
+                    <Text text="Status" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem type="Active">
+                    <cells>
+                        <Text text="{orders>id}" />
+                        <Text
+                            text="{ path: 'orders>userId', formatter: '.formatCustomerName' }"
+                        />
+                        <Text text="{orders>title}" />
+                        <Text text="{orders>status}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

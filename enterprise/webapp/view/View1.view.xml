@@ -9,75 +9,100 @@
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:vizData="sap.viz.ui5.data"
     xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds"
-    displayBlock="true">
-
+    displayBlock="true"
+>
     <App>
         <pages>
             <Page showHeader="false">
-
-                <!-- 📌 APPLICATION TITLE (ONLY ONE) -->
+                <!--  APPLICATION TITLE (ONLY ONE) -->
                 <Title
                     text="{i18n>appTitle}"
                     level="H2"
                     class="pageHeader"
                 />
 
-                <!-- 📌 MAIN CONTENT -->
+                <!--  MAIN CONTENT -->
                 <VBox class="dashboardPage">
+                    <!--  KPI CARDS SECTION -->
 
-                    <!-- 📌 KPI CARDS SECTION -->
-<l:Grid width="100%" defaultSpan="L4 M6 S12" class="kpiRow">
+                    <l:Grid
+                        width="100%"
+                        defaultSpan="L6 M6 S12"
+                        class="kpiRow"
+                    >
+                        <GenericTile
+                            class="kpiCard"
+                            header="Total Customers"
+                            press=".onNavToCustomers"
+                        >
+                            <TileContent>
+                                <NumericContent
+                                    value="{dashboard>/totalCustomers}"
+                                    icon="sap-icon://group"
+                                    withMargin="false"
+                                />
+                            </TileContent>
+                        </GenericTile>
 
-    <GenericTile class="kpiCard" header="Total Customers" press=".onNavToCustomers">
-        <TileContent>
-            <NumericContent 
-                value="{dashboard>/totalCustomers}" 
-                icon="sap-icon://group" 
-                withMargin="false" />
-        </TileContent>
-    </GenericTile>
+                        <GenericTile
+                            class="kpiCard"
+                            header="Total Orders"
+                            press=".onNavToOrders"
+                        >
+                            <TileContent>
+                                <NumericContent
+                                    value="{dashboard>/totalOrders}"
+                                    icon="sap-icon://sales-order"
+                                    withMargin="false"
+                                />
+                            </TileContent>
+                        </GenericTile>
+                    </l:Grid>
 
-    <GenericTile class="kpiCard" header="Total Orders">
-        <TileContent>
-            <NumericContent 
-                value="{dashboard>/totalOrders}" 
-                icon="sap-icon://sales-order" 
-                withMargin="false" />
-        </TileContent>
-    </GenericTile>
-
-    <GenericTile class="kpiCard" header="Pending Orders">
-        <TileContent>
-            <NumericContent 
-                value="{dashboard>/pendingOrders}" 
-                icon="sap-icon://pending" 
-                withMargin="false" />
-        </TileContent>
-    </GenericTile>
-
-</l:Grid>
-
-
-                    <!-- 📌 CHARTS SECTION -->
-                    <l:Grid width="100%" defaultSpan="L6 M12 S12" class="chartRow">
-
+                    <!--  CHARTS SECTION -->
+                    <l:Grid
+                        width="100%"
+                        defaultSpan="L6 M12 S12"
+                        class="chartRow"
+                    >
                         <!-- Bar Chart -->
                         <VBox class="chartCard">
                             <Title text="Orders Per Customer" />
-                            <viz:VizFrame id="barChart" vizType="column" height="350px" width="100%">
+                            <viz:VizFrame
+                                id="barChart"
+                                vizType="column"
+                                height="350px"
+                                width="100%"
+                            >
                                 <viz:dataset>
-                                    <vizData:FlattenedDataset data="{dashboard>/ordersPerCustomer}">
+                                    <vizData:FlattenedDataset
+                                        data="{dashboard>/ordersPerCustomer}"
+                                    >
                                         <vizData:dimensions>
-                                            <vizData:DimensionDefinition name="Customer" value="{name}" />
+                                            <vizData:DimensionDefinition
+                                                name="Customer"
+                                                value="{name}"
+                                            />
                                         </vizData:dimensions>
                                         <vizData:measures>
-                                            <vizData:MeasureDefinition name="Orders" value="{orders}" />
+                                            <vizData:MeasureDefinition
+                                                name="Orders"
+                                                value="{orders}"
+                                            />
                                         </vizData:measures>
                                     </vizData:FlattenedDataset>
                                 </viz:dataset>
                                 <viz:feeds>
-                                    <vizFeeds:FeedItem uid="categoryAxis" type="Dimension" values="Customer" />
-                                    <vizFeeds:FeedItem uid="valueAxis" type="Measure" values="Orders" />
+                                    <vizFeeds:FeedItem
+                                        uid="categoryAxis"
+                                        type="Dimension"
+                                        values="Customer"
+                                    />
+                                    <vizFeeds:FeedItem
+                                        uid="valueAxis"
+                                        type="Measure"
+                                        values="Orders"
+                                    />
                                 </viz:feeds>
                             </viz:VizFrame>
                         </VBox>
@@ -85,26 +110,45 @@
                         <!-- Donut Chart -->
                         <VBox class="chartCard">
                             <Title text="Order Status Overview" />
-                            <viz:VizFrame id="donutChart" vizType="donut" height="350px" width="100%">
+                            <viz:VizFrame
+                                id="donutChart"
+                                vizType="donut"
+                                height="350px"
+                                width="100%"
+                            >
                                 <viz:dataset>
-                                    <vizData:FlattenedDataset data="{dashboard>/orderStatus}">
+                                    <vizData:FlattenedDataset
+                                        data="{dashboard>/orderStatus}"
+                                    >
                                         <vizData:dimensions>
-                                            <vizData:DimensionDefinition name="Status" value="{status}" />
+                                            <vizData:DimensionDefinition
+                                                name="Status"
+                                                value="{status}"
+                                            />
                                         </vizData:dimensions>
                                         <vizData:measures>
-                                            <vizData:MeasureDefinition name="Count" value="{count}" />
+                                            <vizData:MeasureDefinition
+                                                name="Count"
+                                                value="{count}"
+                                            />
                                         </vizData:measures>
                                     </vizData:FlattenedDataset>
                                 </viz:dataset>
                                 <viz:feeds>
-                                    <vizFeeds:FeedItem uid="size" type="Measure" values="Count" />
-                                    <vizFeeds:FeedItem uid="color" type="Dimension" values="Status" />
+                                    <vizFeeds:FeedItem
+                                        uid="size"
+                                        type="Measure"
+                                        values="Count"
+                                    />
+                                    <vizFeeds:FeedItem
+                                        uid="color"
+                                        type="Dimension"
+                                        values="Status"
+                                    />
                                 </viz:feeds>
                             </viz:VizFrame>
                         </VBox>
-
                     </l:Grid>
-
                 </VBox>
             </Page>
         </pages>
